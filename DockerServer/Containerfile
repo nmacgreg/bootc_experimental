@@ -1,0 +1,4 @@
+# How do I get :latest?  Does this imply :latest?  How do I specify the version? 
+FROM quay.io/fedora/fedora-bootc:42
+RUN dnf install docker bacula-client netdata -y && dnf clean all && rm -rf /var/cache/dnf
+RUN bootc container lint
