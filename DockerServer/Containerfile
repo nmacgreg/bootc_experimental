@@ -1,4 +1,14 @@
 # How do I get :latest?  Does this imply :latest?  How do I specify the version? 
 FROM quay.io/fedora/fedora-bootc:42
 RUN dnf install docker bacula-client netdata -y && dnf clean all && rm -rf /var/cache/dnf
+RUN useradd -m -G wheel nmacgreg
+COPY authorized_keys /tmp/authorized_keys
+RUN mkdir -p /var/home/nmacgreg/.ssh && \
+    cp /tmp/authorized_keys /var/home/nmacgreg/.ssh/authorized_keys && \
+    chown -R nmacgreg:nmacgreg /var/home/nmacgreg/.ssh && \
+    chmod 700 /var/home/nmacgreg/.ssh && \
+    chmod 600 /var/home/nmacgreg/.ssh/authorized_keys && \
+    rm /tmp/authorized_keys
+RUN echo '%wheel ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/wheel && \
+    chmod 440 /etc/sudoers.d/wheel
 RUN bootc container lint
