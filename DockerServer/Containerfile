@@ -1,6 +1,6 @@
 # How do I get :latest?  Does this imply :latest?  How do I specify the version? 
 FROM quay.io/fedora/fedora-bootc:42
-RUN dnf install docker bacula-client netdata -y && dnf clean all && rm -rf /var/cache/dnf
+RUN dnf install docker bacula-client netdata nagios nagios-plugins-all -y && dnf clean all && rm -rf /var/cache/dnf
 RUN useradd -m -G wheel nmacgreg
 COPY authorized_keys /tmp/authorized_keys
 RUN mkdir -p /var/home/nmacgreg/.ssh && \
